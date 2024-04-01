@@ -28,13 +28,13 @@ def fetch_article_links_selenium(url):
         driver.get(url)
         time.sleep(2)  # 等待页面加载
         article_links = []
-        article_divs = driver.find_elements(By.CSS_SELECTOR, 'div.rs, div.rt, div.ru, div.rv, div.rw')
+        elements = driver.execute_script("return Array.from(document.querySelectorAll('[role=\"link\"]'))")
+        
       
-        for div in article_divs[:5]: 
-            a_tag = div.find_element(By.TAG_NAME, 'a')
-            full_link = a_tag.get_attribute('href')
-            relative_link = full_link.split('?')[0]  # 移除查询参数
-            article_links.append(relative_link)
+        for element in elements[4:9]:  # 只选取第5个到第9个元素
+            link = element.get_attribute('data-href')
+            if link:
+                article_links.append(link)  # 移除查询参数
 
         return article_links
     finally:
@@ -106,7 +106,6 @@ def process_data_with_openai(data, prompt_function, api_key):
             model="gpt-3.5-turbo",
             messages=[{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": prompt}]
         )
-        print (response['choices'][0])
         return response['choices'][0]['message']['content']
     except Exception as e:
         return str(e)
