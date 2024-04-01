@@ -183,8 +183,8 @@ save_text_data(open_ai_data, './ainews/medium_posts_'+current_date+'.md')
 
 save_markdown_data(posts_data, './ainews/medium_posts_'+current_date+'markdown'+'.md')
 
-# send_google_email("AI Newsletter", "This is the newsletter for " + current_date, 
-#                   "from@gmail.com", "password", 
-#                   "send@gmail.com", 
-#                   './ainews/medium_posts_{}markdown.md'.format(current_date))
+send_google_email("AI Newsletter", "This is the newsletter for " + current_date, 
+                  "from@gmail.com", "password", 
+                  "send@gmail.com", 
+                  './ainews/medium_posts_{}markdown.md'.format(current_date))
 
